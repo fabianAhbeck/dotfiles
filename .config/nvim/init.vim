@@ -20,20 +20,24 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'gruvbox-community/gruvbox'
+Plug 'ayu-theme/ayu-vim'
+"Plug 'gruvbox-community/gruvbox'
 "Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'captbaritone/better-indent-support-for-php-with-html'
 
 call plug#end()
 
 
-
-colorscheme gruvbox
+set termguicolors
+let ayucolor="dark"
+colorscheme ayu
+"colorscheme gruvbox
 "colorscheme dracula
-set background=dark
+"set background=dark
 
 let mapleader = " "
 
+vnoremap . :normal.<CR>
 nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>phw :h <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>h :wincmd h<CR>
