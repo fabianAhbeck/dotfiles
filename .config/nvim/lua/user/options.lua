@@ -41,5 +41,8 @@ vim.opt.shortmess:append "c"
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
-vim.cmd([[colorscheme gruvbox]])
+local gruv_status, _ = pcall(require, "gruvbox")
+if gruv_status then
+  vim.cmd("colorscheme gruvbox")
+end
+  

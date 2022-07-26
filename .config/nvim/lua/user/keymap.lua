@@ -13,6 +13,8 @@ keymap("n", "<leader>l", "<C-w>l", opts)
 keymap("n", "<leader>j", "<C-w>j", opts)
 keymap("n", "<leader>k", "<C-w>k", opts)
 
+keymap("n", "<leader>bd", ":bdelete<CR>", opts)
+
 keymap("n", "<leader>vs", ":vsplit<CR>", opts)
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
 keymap("n", "<C-Down>", ":resize -2<CR>", opts)
