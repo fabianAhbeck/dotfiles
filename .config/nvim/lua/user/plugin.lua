@@ -45,6 +45,11 @@ return packer.startup(function(use)
 		use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
 		use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 		use "ellisonleao/gruvbox.nvim"
+		use "williamboman/mason.nvim"
+    use "moll/vim-bbye"
+    use "akinsho/toggleterm.nvim"
+    use "ahmedkhalf/project.nvim"
+    use "lewis6991/impatient.nvim"
 
 		-- cmp plugins
 		use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -60,7 +65,8 @@ return packer.startup(function(use)
 
 		-- LSP
 		use "neovim/nvim-lspconfig" -- enable LSP
-		use "williamboman/mason.nvim"
+		use "jose-elias-alvarez/null-ls.nvim"
+    use "williamboman/nvim-lsp-installer"
 
 		use 'kyazdani42/nvim-web-devicons'
 
@@ -92,8 +98,13 @@ return packer.startup(function(use)
       requires = 'kyazdani42/nvim-web-devicons'
     }
 
-		-- Automatically set up your configuration after cloning packer.nvim
-		-- Put this at the end after all plugins
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
 		if PACKER_BOOTSTRAP then
 				require("packer").sync()
 		end

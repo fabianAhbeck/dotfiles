@@ -13,7 +13,7 @@ keymap("n", "<leader>l", "<C-w>l", opts)
 keymap("n", "<leader>j", "<C-w>j", opts)
 keymap("n", "<leader>k", "<C-w>k", opts)
 
-keymap("n", "<leader>bd", ":bdelete<CR>", opts)
+keymap("n", "<leader>bd", ":Bdelete<CR>", opts)
 
 keymap("n", "<leader>vs", ":vsplit<CR>", opts)
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
@@ -39,8 +39,11 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("n", "<leader>t", ":ToggleTerm<CR>", opts)
 
 -- telescope
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "fg", "<cmd>Telescope live_grep<cr>", opts)
+
+keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
