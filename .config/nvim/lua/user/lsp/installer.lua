@@ -1,3 +1,11 @@
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
 local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -24,20 +32,39 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
+
+local lsp_flags = {
+  -- This is the default in Nvim 0.7+
+  debounce_text_changes = 150,
+}
+
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'sumneko_lua', 'pyright' }
-for _, lsp in ipairs(servers) do
-	local opts = {
+-- local servers = { 'sumneko_lua', 'pyright' }
+require('lspconfig')['pyright'].setup{
+  on_attach = on_attach,
+  flags = lsp_flags
+}
+require('lspconfig')['sumneko_lua'].setup{
     on_attach = on_attach,
     capabilities = capabilities,
-	}
-
-  if lsp == "sumneko_lua" then
-  	local sumneko_opts = require("user.lsp.settings.sumneko_lua")
-  	opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-  end
-
-  lspconfig[lsp].setup {
-			opts
-  }
-end
+		settings = {
+				Lua = {
+						runtime = {
+								-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+								version = 'LuaJIT',
+						},
+						diagnostics = {
+								-- Get the language server to recognize the `vim` global
+								globals = {'vim'},
+						},
+						workspace = {
+								-- Make the server aware of Neovim runtime files
+								library = vim.api.nvim_get_runtime_file("", true),
+						},
+						-- Do not send telemetry data containing a randomized but unique identifier
+						telemetry = {
+								enable = false,
+						},
+				},
+		}
+}

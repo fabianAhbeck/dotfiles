@@ -46,6 +46,7 @@ return packer.startup(function(use)
 		use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 		use "ellisonleao/gruvbox.nvim"
 		use "williamboman/mason.nvim"
+    use "tpope/vim-fugitive"
     use "moll/vim-bbye"
     use "akinsho/toggleterm.nvim"
     use "ahmedkhalf/project.nvim"
@@ -67,8 +68,6 @@ return packer.startup(function(use)
 		use "neovim/nvim-lspconfig" -- enable LSP
 		use "jose-elias-alvarez/null-ls.nvim"
     use "williamboman/nvim-lsp-installer"
-
-		use 'kyazdani42/nvim-web-devicons'
 
 		use {
 				'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -94,7 +93,7 @@ return packer.startup(function(use)
 
     use {
       'akinsho/bufferline.nvim', 
-      tag = "v2.*", 
+      tag = "v2.*",
       requires = 'kyazdani42/nvim-web-devicons'
     }
 
