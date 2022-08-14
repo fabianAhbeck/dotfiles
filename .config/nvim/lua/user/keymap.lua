@@ -52,10 +52,10 @@ keymap("n", "<leader>t", ":ToggleTerm<CR>", opts)
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "fg", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 
 -- Nvim Tree
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+keymap("n", "<leader>ne", ":NvimTreeToggle<cr>", opts)
 
 -- Vimspector
 keymap("n", "<leader>dd", ":call vimspector#Launch()<cr>", opts)
