@@ -56,3 +56,17 @@ keymap("n", "fg", "<cmd>Telescope live_grep<cr>", opts)
 
 -- Nvim Tree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+
+-- Vimspector
+keymap("n", "<leader>dd", ":call vimspector#Launch()<cr>", opts)
+keymap("n", "<leader>de", ":call vimspector#Reset()<cr>", opts)
+keymap("n", "<leader>c", ":call vimspector#Continue()<cr>", opts)
+
+keymap("n", "<leader>dt", ":call vimspector#ToggleBreakpoint()<cr>", opts)
+keymap("n", "<leader>dT", ":call vimspector#ClearBreakpoints()<cr>", opts)
+
+keymap("n", "<leader>s", ":call vimspector#StepInto()<cr>", opts)
+keymap("n", "<leader>o", ":call vimspector#StepOver()<cr>", opts)
+keymap("n", "<leader>dw", ":VimspectorWatch ", opts)
+keymap("n", "<leader>dp", "<Plug>VimspectorBalloonEval", opts)
+
