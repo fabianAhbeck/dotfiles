@@ -52,6 +52,7 @@ return packer.startup(function(use)
     use "ahmedkhalf/project.nvim"
     use "lewis6991/impatient.nvim"
     use "puremourning/vimspector"
+    use "github/copilot.vim"
 
 		-- cmp plugins
 		use "hrsh7th/nvim-cmp" -- The completion plugin
