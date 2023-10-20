@@ -44,7 +44,8 @@ return packer.startup(function(use)
 		use "wbthomason/packer.nvim" -- Have packer manage itself
 		use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
 		use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
-		use "ellisonleao/gruvbox.nvim"
+		-- use "ellisonleao/gruvbox.nvim"
+    use "morhetz/gruvbox"
 		use "williamboman/mason.nvim"
     use "tpope/vim-fugitive"
     use "moll/vim-bbye"
@@ -71,6 +72,9 @@ return packer.startup(function(use)
 		use "jose-elias-alvarez/null-ls.nvim"
     use "williamboman/nvim-lsp-installer"
 
+    -- CoPilot
+    use "https://github.com/github/copilot.vim.git"
+
 		use {
 				'nvim-telescope/telescope.nvim', tag = '0.1.0',
 				-- or                            , branch = '0.1.x',
@@ -94,7 +98,7 @@ return packer.startup(function(use)
 		}
 
     use {
-      'akinsho/bufferline.nvim', 
+      'akinsho/bufferline.nvim',
       tag = "v2.*",
       requires = 'kyazdani42/nvim-web-devicons'
     }
@@ -103,6 +107,29 @@ return packer.startup(function(use)
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
+
+    use {
+    "lewis6991/hover.nvim",
+    config = function()
+        require("hover").setup {
+            init = function()
+                -- Require providers
+                require("hover.providers.lsp")
+                -- require('hover.providers.gh')
+                -- require('hover.providers.man')
+                -- require('hover.providers.dictionary')
+            end,
+            preview_opts = {
+                border = nil
+            },
+            title = true
+        }
+
+        -- Setup keymaps
+        vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
+        vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
+    end
+  }
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
