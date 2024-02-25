@@ -1,0 +1,5 @@
+return {
+  {
+    "gptlang/CopilotChat.nvim",
+  },
+}

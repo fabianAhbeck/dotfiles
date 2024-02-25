@@ -1,0 +1,3 @@
+pico
+nitrogen
+polybar

@@ -42,7 +42,7 @@ keymap("v", ">", ">gv", opts)
 -- Don't overwrite buffer on paste
 keymap("v", "p", '"_dP', opts)
 
--- Terminal 
+-- Terminal
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
@@ -50,14 +50,31 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("n", "<leader>t", ":ToggleTerm<CR>", opts)
 
 -- Telescope
-keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>fb", "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap(
+	"n",
+	"<leader>ff",
+	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+	opts
+)
+keymap(
+	"n",
+	"<leader>fb",
+	"<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+	opts
+)
+keymap(
+	"n",
+	"<leader>fg",
+	"<cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+	opts
+)
 
 -- Nvim Tree
 keymap("n", "<leader>ne", ":NvimTreeToggle<cr>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Vimspector
+keymap("n", "<leader>dg", "<cmd>lua require('user.vimspector').generate_debug_profile()<cr>", opts)
 keymap("n", "<leader>dd", ":call vimspector#Launch()<cr>", opts)
 keymap("n", "<leader>de", ":call vimspector#Reset()<cr>", opts)
 keymap("n", "<leader>c", ":call vimspector#Continue()<cr>", opts)
@@ -69,4 +86,3 @@ keymap("n", "<leader>s", ":call vimspector#StepInto()<cr>", opts)
 keymap("n", "<leader>o", ":call vimspector#StepOver()<cr>", opts)
 keymap("n", "<leader>dw", ":VimspectorWatch ", opts)
 keymap("n", "<leader>dp", "<Plug>VimspectorBalloonEval", opts)
-

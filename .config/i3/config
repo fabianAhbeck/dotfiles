@@ -20,7 +20,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 #Set the default font
-font pango:monospace 12
+font hack:monospace 12
 
 # Border settings
 new_window pixel 1
@@ -33,6 +33,9 @@ gaps inner 10
 gaps outer 0
 smart_gaps on
 smart_borders on
+
+# Swap escape and caps lock
+exec setxkbmap -option caps:swapescape
 
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -217,6 +220,6 @@ bindsym $mod+p mode "resize"
 #        urgent_workspace #2f343a #900000 #ffffff
 #    }
 #}
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id polybar
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 

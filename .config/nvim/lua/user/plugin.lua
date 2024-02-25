@@ -107,6 +107,26 @@ return packer.startup(function(use)
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
+    use {
+      'mfussenegger/nvim-dap',
+      requires = {
+        "Pocco81/DAPInstall.nvim",
+        "theHamsta/nvim-dap-virtual-text",
+        "rcarriga/nvim-dap-ui",
+        "mfussenegger/nvim-dap-python",
+        "nvim-telescope/telescope-dap.nvim",
+        { "jbyuki/one-small-step-for-vimkind", module = "osv" },
+      },
+    }
+--    -- Vimspector
+--    use {
+--      "puremourning/vimspector",
+--      cmd = { "VimspectorInstall", "VimspectorUpdate" },
+--      fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
+--      config = function()
+--        require("user.vimspector").setup()
+--      end,
+--    }
 
     use {
     "lewis6991/hover.nvim",
