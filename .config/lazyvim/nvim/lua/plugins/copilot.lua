@@ -1,5 +1,0 @@
-return {
-  {
-    "gptlang/CopilotChat.nvim",
-  },
-}

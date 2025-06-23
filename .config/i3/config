@@ -35,7 +35,7 @@ smart_gaps on
 smart_borders on
 
 # Swap escape and caps lock
-exec setxkbmap -option caps:swapescape
+#exec setxkbmap -option caps:swapescape
 
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -220,6 +220,6 @@ bindsym $mod+p mode "resize"
 #        urgent_workspace #2f343a #900000 #ffffff
 #    }
 #}
-exec_always --no-startup-id polybar
+exec --no-startup-id polybar
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
