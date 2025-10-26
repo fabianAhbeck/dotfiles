@@ -1,16 +1,11 @@
-require('user/plugin')
-require('user/options')
-require('user/keymap')
-require('user/plugin')
-require('user/cmp')
-require('user/lsp')
-require('user/mason')
-require('user/telescope')
-require('user/treesitter')
-require('user/gitsigns')
-require('user/nvimtree')
-require('user/bufferline')
-require('user/lualine')
-require('user/toggleterm')
-require('user/project')
-require('user/impatient')
+-- Starting point for Neovim configuration
+-- Load plugins and settings
+-- Author: Fabian Åhbeck
+-- Date: 2025-10-25
+-- Version: 1.0.0
+-- License: MIT
+
+require("config.lazy")
+require("config.options")
+require("config.keybinds")
+require("config.lsp-config")
