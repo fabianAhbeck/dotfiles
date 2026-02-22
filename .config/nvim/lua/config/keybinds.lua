@@ -36,3 +36,7 @@ kmap("n", "<leader>e", ":NvimTreeToggle<CR>")
 kmap("n", "<leader>nh", ":nohlsearch<CR>")
 
 -- LSP
+
+-- Terminal
+kmap("n", "<leader>t", ":term<CR>A")
+kmap("t",  '<Esc>', [[<C-\><C-n>]], {noremap = true})
