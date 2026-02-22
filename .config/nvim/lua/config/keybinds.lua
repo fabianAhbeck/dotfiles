@@ -1,4 +1,5 @@
 local kmap = vim.keymap.set
+local bufnr = vim.api.nvim_get_current_buf()
 vim.g.mapleader = " "
 
 -- Run lua commands
