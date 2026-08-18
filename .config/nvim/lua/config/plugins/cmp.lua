@@ -17,8 +17,8 @@ return {
 
               ['<C-k>']  = { 'select_prev', 'fallback' },
               ['<C-j>']  = { 'select_next', 'fallback' },
-              ['<Tab>']  = { 'accept', 'fallback'},
-              ['<CR>']  = { 'cancel', 'fallback'},
+              ['<Tab>']  = { 'select_and_accept', 'fallback'},
+              ['<CR>']  = { 'accept', 'fallback'},
               ['<ESC>']  = { 'cancel', 'fallback'},
 
 
@@ -31,9 +31,26 @@ return {
       -- (Default) Only show the documentation popup when manually triggered
       --completion = { documentation = { auto_show = false } },
       completion = {
-        documentation = { auto_show = false },
+        ghost_text = { enabled = true },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 250,
+          window = { border = 'rounded' },
+        },
+        list = {
+          selection = { preselect = false, auto_insert = false },
+        },
         menu = {
+          border = 'rounded',
           draw = {
+            -- Left column: icon + label + inline description.
+            -- Right column: item kind (Function, Variable, ...) + source.
+            columns = {
+              { 'kind_icon', 'label', 'label_description', gap = 1 },
+              { 'kind', 'source_name', gap = 1 },
+            },
+            -- Syntax-highlight the completion labels with treesitter (LSP items).
+            treesitter = { 'lsp' },
             components = {
               kind_icon = {
                 text = function(ctx)
@@ -71,7 +88,15 @@ return {
         }
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          -- Completion for the Neovim Lua API and required plugin modules.
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            score_offset = 100, -- rank lazydev items above LSP
+          },
+        },
       },
 
       fuzzy = { implementation = "prefer_rust" },
