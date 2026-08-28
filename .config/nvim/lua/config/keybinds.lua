@@ -111,6 +111,10 @@ local function claude_toggle()
   else
     vim.cmd("terminal claude")
     claude.buf = vim.api.nvim_get_current_buf()
+    -- Claude Code owns <Esc> (cancel a turn, double-tap to clear the input), so
+    -- let it through here instead of using it to leave terminal mode. Use the
+    -- built-in <C-\><C-n> to get to normal mode in this buffer.
+    vim.keymap.set("t", "<Esc>", "<Esc>", { buffer = claude.buf })
   end
   vim.cmd("startinsert")
 end
