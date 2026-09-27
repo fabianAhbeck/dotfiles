@@ -31,6 +31,79 @@ kmap("n", "<leader>bd", ":bdelete<CR>")
 -- Nvim-tree
 kmap("n", "<leader>e", ":NvimTreeToggle<CR>")
 
+-- Git (fugitive)
+kmap("n", "<leader>gs", "<cmd>Git<CR>", { desc = "Git status" })
+kmap("n", "<leader>gc", "<cmd>Git commit<CR>", { desc = "Git commit" })
+kmap("n", "<leader>ga", "<cmd>Git commit --amend<CR>", { desc = "Git commit --amend" })
+kmap("n", "<leader>gp", "<cmd>Git push<CR>", { desc = "Git push" })
+kmap("n", "<leader>gP", "<cmd>Git pull --rebase<CR>", { desc = "Git pull --rebase" })
+kmap("n", "<leader>gb", "<cmd>Git blame<CR>", { desc = "Git blame" })
+kmap("n", "<leader>gd", "<cmd>Gvdiffsplit<CR>", { desc = "Diff file against index" })
+kmap("n", "<leader>gl", "<cmd>Git log --oneline --graph --decorate<CR>", { desc = "Git log" })
+kmap("n", "<leader>gL", "<cmd>0Gclog<CR>", { desc = "History of current file" })
+kmap("n", "<leader>gw", "<cmd>Gwrite<CR>", { desc = "Stage current file" })
+kmap("n", "<leader>gB", "<cmd>Telescope git_branches<CR>", { desc = "Git branches" })
+kmap("n", "<leader>gn", function()
+  vim.ui.input({ prompt = "New branch: " }, function(name)
+    if name and name ~= "" then
+      vim.cmd("Git switch -c " .. vim.fn.fnameescape(name))
+    end
+  end)
+end, { desc = "Create and switch to new branch" })
+
+-- Push the current branch and open GitHub's PR form (prefilled from commits).
+-- Only runs for GitHub remotes; other hosts (Gitea etc.) are left untouched.
+local function open_pr()
+  local cwd = vim.fn.FugitiveWorkTree()
+  if cwd == "" then
+    vim.notify("Not in a git repository", vim.log.levels.WARN)
+    return
+  end
+  local function git(args)
+    local out = vim.system(vim.list_extend({ "git" }, args), { cwd = cwd, text = true }):wait()
+    return out.code == 0 and vim.trim(out.stdout) or nil
+  end
+
+  local remote = git({ "remote", "get-url", "origin" })
+  if not remote then
+    vim.notify("No 'origin' remote", vim.log.levels.WARN)
+    return
+  end
+  if not remote:match("github%.com[:/]") then
+    vim.notify("PR shortcut only supports GitHub (remote: " .. remote .. ")", vim.log.levels.WARN)
+    return
+  end
+
+  local branch = git({ "branch", "--show-current" })
+  local default = (git({ "rev-parse", "--abbrev-ref", "origin/HEAD" }) or ""):gsub("^origin/", "")
+  if not branch or branch == "" then
+    vim.notify("Detached HEAD, switch to a branch first", vim.log.levels.WARN)
+    return
+  end
+  if branch == default or (default == "" and (branch == "main" or branch == "master")) then
+    vim.notify("On the default branch (" .. branch .. "), create a feature branch first", vim.log.levels.WARN)
+    return
+  end
+
+  vim.notify("Pushing " .. branch .. "...")
+  vim.system({ "git", "push", "-u", "origin", "HEAD" }, { cwd = cwd, text = true }, function(push)
+    if push.code ~= 0 then
+      vim.schedule(function() vim.notify("git push failed:\n" .. push.stderr, vim.log.levels.ERROR) end)
+      return
+    end
+    vim.system({ "gh", "pr", "create", "--fill", "--web" }, { cwd = cwd, text = true }, function(pr)
+      if pr.code ~= 0 then
+        vim.schedule(function() vim.notify("gh pr create failed:\n" .. pr.stderr, vim.log.levels.ERROR) end)
+      end
+    end)
+  end)
+end
+kmap("n", "<leader>gr", open_pr, { desc = "Push and open GitHub PR" })
+kmap({ "n", "v" }, "<leader>go", ":GBrowse<CR>", { desc = "Open file/selection on remote" })
+-- Merge conflicts (inside :Gvdiffsplit!): take the left (ours) or right (theirs) side
+kmap("n", "<leader>gh", "<cmd>diffget //2<CR>", { desc = "Take ours" })
+kmap("n", "<leader>gt", "<cmd>diffget //3<CR>", { desc = "Take theirs" })
+
 -- Search
 kmap("n", "<leader>nh", ":nohlsearch<CR>")
 
