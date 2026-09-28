@@ -51,8 +51,24 @@ kmap("n", "<leader>gn", function()
   end)
 end, { desc = "Create and switch to new branch" })
 
--- Push the current branch and open GitHub's PR form (prefilled from commits).
--- Only runs for GitHub remotes; other hosts (Gitea etc.) are left untouched.
+-- Push the current branch and open a PR form in the browser.
+-- GitHub goes through `gh` (prefilled from commits); hosts listed in
+-- `gitea_hosts` open Gitea's compare page. Any other host is left untouched.
+local gitea_hosts = { "gitea.leafer.site" }
+
+-- Split a remote URL (scp-style, ssh:// or https://) into host and repo path.
+local function parse_remote(url)
+  local host, path = url:match("^%a[%w+.-]*://([^/]+)/(.+)$")
+  if host then
+    host = host:gsub("^.*@", ""):gsub(":%d+$", "")
+  else
+    host, path = url:match("^[^@]+@([^:]+):(.+)$")
+  end
+  if host then
+    return host, (path:gsub("%.git$", ""))
+  end
+end
+
 local function open_pr()
   local cwd = vim.fn.FugitiveWorkTree()
   if cwd == "" then
@@ -69,8 +85,11 @@ local function open_pr()
     vim.notify("No 'origin' remote", vim.log.levels.WARN)
     return
   end
-  if not remote:match("github%.com[:/]") then
-    vim.notify("PR shortcut only supports GitHub (remote: " .. remote .. ")", vim.log.levels.WARN)
+  local host, repo = parse_remote(remote)
+  local is_github = host == "github.com"
+  local is_gitea = vim.list_contains(gitea_hosts, host)
+  if not (is_github or is_gitea) then
+    vim.notify("PR shortcut doesn't support this remote: " .. remote, vim.log.levels.WARN)
     return
   end
 
@@ -91,6 +110,13 @@ local function open_pr()
       vim.schedule(function() vim.notify("git push failed:\n" .. push.stderr, vim.log.levels.ERROR) end)
       return
     end
+    if is_gitea then
+      local base = default ~= "" and default or "main"
+      vim.schedule(function()
+        vim.ui.open(("https://%s/%s/compare/%s...%s"):format(host, repo, base, branch))
+      end)
+      return
+    end
     vim.system({ "gh", "pr", "create", "--fill", "--web" }, { cwd = cwd, text = true }, function(pr)
       if pr.code ~= 0 then
         vim.schedule(function() vim.notify("gh pr create failed:\n" .. pr.stderr, vim.log.levels.ERROR) end)
@@ -98,7 +124,7 @@ local function open_pr()
     end)
   end)
 end
-kmap("n", "<leader>gr", open_pr, { desc = "Push and open GitHub PR" })
+kmap("n", "<leader>gr", open_pr, { desc = "Push and open PR (GitHub/Gitea)" })
 kmap({ "n", "v" }, "<leader>go", ":GBrowse<CR>", { desc = "Open file/selection on remote" })
 -- Merge conflicts (inside :Gvdiffsplit!): take the left (ours) or right (theirs) side
 kmap("n", "<leader>gh", "<cmd>diffget //2<CR>", { desc = "Take ours" })
