@@ -1,35 +1,35 @@
 local kmap = vim.keymap.set
 
 -- Run lua commands
-kmap("n", "<leader>%", "<cmd>source %<CR>")
-kmap("n", "<leader>x", ":.lua<CR>")
-kmap("v", "<leader>x", ":lua<CR>")
+kmap("n", "<leader>%", "<cmd>source %<CR>", { desc = "Source current file" })
+kmap("n", "<leader>x", ":.lua<CR>", { desc = "Run line as Lua" })
+kmap("v", "<leader>x", ":lua<CR>", { desc = "Run selection as Lua" })
 
 -- Edit Config
-kmap("n", "<leader>cc", ":e ~/.config/nvim/init.lua<CR>")
+kmap("n", "<leader>cc", ":e ~/.config/nvim/init.lua<CR>", { desc = "Edit Neovim config" })
 
 -- Telescope
-kmap("n", "<leader>ff", ":Telescope find_files<CR>")
-kmap("n", "<leader>fg", ":Telescope live_grep<CR>")
-kmap("n", "<leader>fb", ":Telescope buffers<CR>")
+kmap("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "Find files" })
+kmap("n", "<leader>fg", ":Telescope live_grep<CR>", { desc = "Live grep" })
+kmap("n", "<leader>fb", ":Telescope buffers<CR>", { desc = "Find buffers" })
 
 -- Pane management
-kmap("n", "<leader>vs", ":vsplit<CR>")
-kmap("n", "<leader>s", ":split<CR>")
-kmap("n", "<leader>h", "<C-w>h")
-kmap("n", "<leader>j", "<C-w>j")
-kmap("n", "<leader>k", "<C-w>k")
-kmap("n", "<leader>l", "<C-w>l")
-kmap("n", "<leader>q", ":q<CR>")
-kmap("n", "<leader>W", ":w<CR>")
+kmap("n", "<leader>vs", ":vsplit<CR>", { desc = "Vertical split" })
+kmap("n", "<leader>s", ":split<CR>", { desc = "Horizontal split" })
+kmap("n", "<leader>h", "<C-w>h", { desc = "Window left" })
+kmap("n", "<leader>j", "<C-w>j", { desc = "Window down" })
+kmap("n", "<leader>k", "<C-w>k", { desc = "Window up" })
+kmap("n", "<leader>l", "<C-w>l", { desc = "Window right" })
+kmap("n", "<leader>q", ":q<CR>", { desc = "Quit window" })
+kmap("n", "<leader>W", ":w<CR>", { desc = "Save file" })
 
 -- Buffer Management
-kmap("n", "H", ":bprevious<CR>")
-kmap("n", "L", ":bnext<CR>")
-kmap("n", "<leader>bd", ":bdelete<CR>")
+kmap("n", "H", ":bprevious<CR>", { desc = "Previous buffer" })
+kmap("n", "L", ":bnext<CR>", { desc = "Next buffer" })
+kmap("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
 -- Nvim-tree
-kmap("n", "<leader>e", ":NvimTreeToggle<CR>")
+kmap("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
 
 -- Git (fugitive)
 kmap("n", "<leader>gs", "<cmd>Git<CR>", { desc = "Git status" })
@@ -134,7 +134,7 @@ kmap("n", "<leader>gt", "<cmd>diffget //3<CR>", { desc = "Take theirs" })
 kmap("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle markdown rendering" })
 
 -- Search
-kmap("n", "<leader>nh", ":nohlsearch<CR>")
+kmap("n", "<leader>nh", ":nohlsearch<CR>", { desc = "Clear search highlight" })
 
 -- LSP
 -- Note: Neovim 0.11 provides defaults: grn (rename), gra (code action),
@@ -193,7 +193,7 @@ local function float_term()
   vim.cmd("startinsert")
 end
 kmap("n", "<leader>t", float_term, { desc = "Toggle floating terminal" })
-kmap("t",  '<Esc>', [[<C-\><C-n>]], {noremap = true})
+kmap("t",  '<Esc>', [[<C-\><C-n>]], {noremap = true, desc = "Exit terminal mode"})
 
 -- Claude Code: toggle a right-hand split running `claude` in the project root.
 -- Pressing again hides the pane but keeps the session alive; pressing once
