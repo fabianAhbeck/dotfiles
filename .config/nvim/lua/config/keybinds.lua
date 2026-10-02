@@ -130,6 +130,9 @@ kmap({ "n", "v" }, "<leader>go", ":GBrowse<CR>", { desc = "Open file/selection o
 kmap("n", "<leader>gh", "<cmd>diffget //2<CR>", { desc = "Take ours" })
 kmap("n", "<leader>gt", "<cmd>diffget //3<CR>", { desc = "Take theirs" })
 
+-- Markdown
+kmap("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Toggle markdown rendering" })
+
 -- Search
 kmap("n", "<leader>nh", ":nohlsearch<CR>")
 

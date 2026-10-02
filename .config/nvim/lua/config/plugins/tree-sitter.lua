@@ -1,6 +1,6 @@
 local parsers = {
   "lua", "vim", "vimdoc", "rust", "go", "gomod", "gowork",
-  "terraform", "hcl", "bash", "json", "yaml", "markdown",
+  "terraform", "hcl", "bash", "json", "yaml", "markdown", "markdown_inline",
 }
 
 return {
